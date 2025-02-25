@@ -20,21 +20,30 @@
           v-model="password"
           aria-labelledby="password-header"
         />
-        <v-icon :icon='mdiTrashCanOutline'/>
+        <v-icon :icon='mdiTrashCanOutline' @click="() => accountsStore.deleteAccountById(id)"/>
     </div>
 </template>
 
 <script setup lang="ts">
-/* global defineProps, defineEmits */
+/* global defineProps, defineEmits, PropType */
 import { mdiTrashCanOutline } from '@mdi/js';
-import { ref } from 'vue';
+import { ref, PropType } from 'vue';
+import { useAccountsStore } from '@/stores/accountsStore'
 import Account from '@/types/Account';
 
-const props = defineProps<Account>()
-const marks = ref(props.marks);
-const recordType = ref(props.recordType);
-const login = ref(props.login);
-const password = ref(props.password);
+const props = defineProps({
+  account: {
+    type: Object as PropType<Account>,
+    required: true
+  }
+});
+const marks = ref(props.account.marks);
+const recordType = ref(props.account.recordType);
+const login = ref(props.account.login);
+const password = ref(props.account.password);
+const id = ref(props.account.id)
+
+const accountsStore = useAccountsStore()
 
 </script>
 
