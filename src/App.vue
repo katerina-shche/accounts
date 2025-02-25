@@ -4,6 +4,9 @@
     <button id='plusButton' @click="addInputLine()">
       <v-icon :icon='mdiPlus' id='mdiPlus'/>
     </button>
+    <button id='resetButton' @click="() => accountsStore.$reset()">
+      <v-icon :icon='mdiTrashCanOutline' id='mdiTrashCanOutline'/>
+    </button>
     <div class='header_info'><v-icon :icon='mdiHelpCircleOutline' id='mdiHelpCircleOutline'/><span>Для указания нескольких меток для одной пары логин/пароль используйте разделитель ; </span></div>
   </div>
   <div class="form-container">
@@ -18,8 +21,8 @@
     <!-- Dynamic Rows -->
     <div class="form-rows" v-if="accountsStore.accounts.length">
       <inputLine 
-        v-for="(account, index) in accountsStore.accounts"
-        :key="index" :account="account"
+        v-for="(account) in accountsStore.accounts"
+        :key="account.id" :account="account"
       />
         
       </div>
