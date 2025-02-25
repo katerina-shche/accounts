@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import Account from '@/types/Account';
 import AccountsState from '@/types/AccountsState';
+import { nanoid } from 'nanoid';
 
 // interface Mark {
 //   text: string,
@@ -10,7 +11,8 @@ import AccountsState from '@/types/AccountsState';
 //   marks: Mark[],
 //   recordType: 'Локальная' | 'LDAP',
 //   login: string,
-//   password: string | null
+//   password: string | null,
+//   id: string,
 // }
 // interface AccountsState {
 //   accounts: Account[];
@@ -33,12 +35,13 @@ export const useAccountsStore = defineStore('accountsStore', {
         marks: [],
         recordType: 'Локальная',
         login: '',
-        password: ''
+        password: '',
+        id: nanoid(),
       });
     },
     // удаляю аккаунт по логину
-    deleteAccountByLogin(login: string): void {
-      this.accounts = this.accounts.filter((acc) => acc.login !== login);
+    deleteAccountById(id: string): void {
+      this.accounts = this.accounts.filter((acc) => acc.id !== id);
     },
     updateAccount(index: number, updates: Account): void {
       this.accounts[index] = updates;
