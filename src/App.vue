@@ -1,27 +1,84 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+  <div class='header'>
+    <h1>Учетные записи</h1>
+    <button id='plusButton' @click="addInputLine()">
+      <v-icon :icon='mdiPlus' id='mdiPlus'/>
+    </button>
+    <div class='header_info'><v-icon :icon='mdiHelpCircleOutline' id='mdiHelpCircleOutline'/><span>Для указания нескольких меток для одной пары логин/пароль используйте разделитель ; </span></div>
+  </div>
+  <div class="form-container">
+    <!-- Header Row -->
+    <div class="form-header">
+      <span id="marks-header">Marks</span>
+      <span id="type-header">Type</span>
+      <span id="login-header">Login Name</span>
+      <span id="password-header">Password</span>
+    </div>
+
+    <!-- Dynamic Rows -->
+    <div class="form-rows" v-if="accountsStore.accounts.length">
+      <inputLine 
+        v-for="(account, index) in accountsStore.accounts"
+        :key="index" :account="account"
+      />
+        
+      </div>
+  </div> 
+  
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import HelloWorld from './components/HelloWorld.vue';
+<script setup lang="ts">
+import { useAccountsStore } from '@/stores/accountsStore'
+import { mdiPlus, mdiHelpCircleOutline, mdiTrashCanOutline } from '@mdi/js';
+import inputLine from '@/components/inputLine.vue'
 
-export default defineComponent({
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-});
+const accountsStore = useAccountsStore()
+
+const addInputLine = () => {
+  //здесь буду добавлять новую линию
+  console.log('жму на плюсик')
+  accountsStore.addEmptyAccount()
+  console.log(accountsStore.accounts)
+}
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+ width: 100vw;
+ height: 100vh;
+ padding: 50px;
+}
+.header {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  color:#202325;
+}
+.header_info {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  margin-top: 20px;
+  background-color: #d3e3fd;
+  border-radius: 10px;
+}
+.header_info span {
+  color: #202325;
+}
+#plusButton {
+  width: 50px;
+  height: 50px;
+  margin-left: 20px;
+  border-radius: 10px;
+  border: 1px solid #d3e3fd;
+}
+.v-icon {
+  color: #545a60;
+} 
+#mdiHelpCircleOutline {
+  margin: 0 10px;
+  
 }
 </style>
