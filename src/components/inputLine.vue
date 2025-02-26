@@ -53,7 +53,7 @@
 /* global defineProps, defineEmits, PropType */
 import { mdiTrashCanOutline, mdiEyeOff, mdiEye } from '@mdi/js';
 import { ref, PropType } from 'vue';
-import { useAccountsStore } from '@/stores/accountsStore'
+import { useAccountsStore } from '@/stores/AccountsStore'
 import Account from '@/types/Account';
 
 const props = defineProps({
@@ -82,13 +82,13 @@ const accountValidation = () => {
     isPasswordValid.value = true;
   }
 
-  if (login.value === '' || login.value.length > 100) {
+  if (login.value === '' || login.value.length > 100 || /\s/.test(login.value)) {
     isLoginValid.value = false;
   } else {
     isLoginValid.value = true;
   }
 
-  if ((recordType.value === 'Локальная' && !password.value) || (password.value && password.value.length > 100)) {
+  if ((recordType.value === 'Локальная' && !password.value) || (password.value && password.value.length > 100) || (password.value && /\s/.test(password.value))) {
     isPasswordValid.value = false;
   } else {
     isPasswordValid.value = true;
