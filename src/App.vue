@@ -12,10 +12,10 @@
   <div class="form-container">
     <!-- Header Row -->
     <div class="form-header">
-      <span id="marks-header">Marks</span>
-      <span id="type-header">Type</span>
-      <span id="login-header">Login Name</span>
-      <span id="password-header">Password</span>
+      <span id="marks-header">Метки</span>
+      <span id="type-header">Тип записи</span>
+      <span id="login-header">Логин</span>
+      <span id="password-header">Пароль</span>
     </div>
 
     <!-- Dynamic Rows -->
@@ -70,7 +70,7 @@ const addInputLine = () => {
 .header_info span {
   color: #202325;
 }
-#plusButton {
+#plusButton, #resetButton {
   width: 50px;
   height: 50px;
   margin-left: 20px;
@@ -82,6 +82,18 @@ const addInputLine = () => {
 } 
 #mdiHelpCircleOutline {
   margin: 0 10px;
-  
 }
+.form-header {
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
+  height: 40px;
+  margin: 20px 0;
+  align-items: center;
+}
+.form-header span {
+  height: 100%;
+  width: 25%;
+}
+
 </style>
