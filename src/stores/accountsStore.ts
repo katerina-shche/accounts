@@ -20,7 +20,7 @@ import { nanoid } from 'nanoid';
 
 export const useAccountsStore = defineStore('accountsStore', {
   state: (): AccountsState => ({
-    accounts: [],
+    accounts: [] as Account[],
   }),
   getters: {
     // просто для теста: беру аккаунт по индексу
@@ -43,9 +43,12 @@ export const useAccountsStore = defineStore('accountsStore', {
     deleteAccountById(id: string): void {
       this.accounts = this.accounts.filter((acc) => acc.id !== id);
     },
-    updateAccount(index: number, updates: Account): void {
-      this.accounts[index] = updates;
-    }
+    updateAccountById(id: string, updatedData: Partial<Account>) {
+      const account = this.accounts.find(acc => acc.id === id)
+      if (account) {
+        Object.assign(account, updatedData)
+      }
+    },
   },
   persist: true, // localStorage
 });
