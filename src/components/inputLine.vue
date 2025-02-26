@@ -30,7 +30,7 @@
           @blur="accountValidation"
         />
         <input v-if="recordType === 'Локальная'"
-          type="password"
+          :type="showPassword ? 'text' : 'password'"
           v-model.trim="password"
           aria-labelledby="password-header"
           class="password-input"
@@ -40,13 +40,18 @@
           :required="recordType === 'Локальная'"
           @blur="accountValidation"
         />
-        <v-icon :icon='mdiTrashCanOutline' @click="() => accountsStore.deleteAccountById(id)"/>
+        <button v-if="recordType === 'Локальная'" @click="togglePasswordVisibility" type="button" class="toggle-btn">
+          <v-icon :icon="showPassword ? mdiEye : mdiEyeOff"/>
+        </button>
+        <button @click="() => accountsStore.deleteAccountById(id)" type="button" class="delete-btn">
+          <v-icon :icon='mdiTrashCanOutline' />
+        </button>
     </div>
 </template>
 
 <script setup lang="ts">
 /* global defineProps, defineEmits, PropType */
-import { mdiTrashCanOutline } from '@mdi/js';
+import { mdiTrashCanOutline, mdiEyeOff, mdiEye } from '@mdi/js';
 import { ref, PropType } from 'vue';
 import { useAccountsStore } from '@/stores/accountsStore'
 import Account from '@/types/Account';
@@ -64,6 +69,10 @@ const password = ref(props.account.password);
 const id = ref(props.account.id);
 const isLoginValid = ref(true);
 const isPasswordValid = ref(true);
+const showPassword = ref(false)
+const togglePasswordVisibility = () => {
+  showPassword.value = !showPassword.value
+}
 
 const accountsStore = useAccountsStore()
 
@@ -92,6 +101,8 @@ const accountValidation = () => {
       login: login.value,
       password: password.value
     })
+
+    console.log(accountsStore.accounts)
   }
 }
 
@@ -99,26 +110,70 @@ const accountValidation = () => {
 
 <style scoped>
 .input-line {
-  display: flex;
-  flex-flow: row nowrap;
+  position: relative;
+  display: grid;
   width: 100%;
   height: 40px;
   gap: 20px;
-  margin: 20px 0;
-  align-items: center;
+  margin: 20px 0; 
+  grid-template-columns: 1fr 1fr 1fr 1fr 36px;
+  align-items: stretch;
+  justify-items: stretch;
 }
 input, select {
   border-radius: 10px;
   border: 1px solid #d3e3fd;
-  height: 100%;
-  width: 25%;
+  height: 40px;
   appearance: auto;
   padding: 0 10px;
 }
-.stretch {
-  width: 50%;
+.marks-input {
+  grid-column-start: 1;
+  grid-column-end: 1;
+  width: 100%;
 }
+.record-type-input {
+  grid-column-start: 2;
+  grid-column-end: 2;
+  width: 100%;
+}
+.login-input {
+  grid-column-start: 3;
+  grid-column-end: 3;
+  width: 100%;
+}
+.password-input {
+  grid-column-start: 4;
+  grid-column-end: 4;
+  width: 100%;
+}
+
+input.login-input.stretch {
+  display: inline-block;
+  grid-column-start: 3;
+  grid-column-end: 5;
+  width: 100%;
+} 
+
+.delete-btn {
+  grid-column-start: 5;
+  grid-column-end: 5;
+  width: 16px;
+  justify-self: start;
+  transform: translateX(-4px);
+}
+
+.toggle-btn {
+  position: absolute;
+  right: 65px;
+  top: 8px;
+}
+
 .invalid-input {
   border: 2px solid rgb(229, 81, 81);
 }
+.v-icon {
+  color: #545a60;
+  z-index: 1;
+} 
 </style>
