@@ -3,7 +3,7 @@ import Account from '@/types/Account';
 import AccountsState from '@/types/AccountsState';
 import { nanoid } from 'nanoid';
 
-export const useAccountsStore = defineStore('accountsStore', {
+export const useAccountsStore = defineStore('AccountsStore', {
   state: (): AccountsState => ({
     accounts: [] as Account[],
   }),

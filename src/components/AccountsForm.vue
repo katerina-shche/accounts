@@ -18,7 +18,7 @@
             </div>
     
             <div class="form-rows" v-if="accountsStore.accounts.length">
-                <inputLine 
+                <InputLine 
                     v-for="(account) in accountsStore.accounts"
                     :key="account.id" :account="account"
                 />
@@ -31,7 +31,7 @@
 
 import { useAccountsStore } from '@/stores/AccountsStore'
 import { mdiPlus, mdiHelpCircleOutline } from '@mdi/js';
-import inputLine from '@/components/InputLine.vue'
+import InputLine from '@/components/InputLine.vue'
     
 const accountsStore = useAccountsStore()
     
